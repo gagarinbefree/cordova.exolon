@@ -167,7 +167,6 @@ var exolon;
                     };
                     MainMenu.prototype.fadeOut = function () {
                         this.add.audio('click', 1, false).play();
-                        this.add.tween(this.background).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
                         var tween = this.add.tween(this.logo).to({ y: 800 }, 2000, Phaser.Easing.Linear.None, true);
                         tween.onComplete.add(this.startGame, this);
                     };
