@@ -3,9 +3,12 @@
     export class Player extends Phaser.Sprite {
 
         constructor(game: Phaser.Game, x: number, y: number) {
-            super(game, x, y,'level01-sprites', 1);
-            this.anchor.setTo(0.5);
-            this.animations.add('fly', [0, 1], 5, true);
+            super(game, x, y,'hero');
+            //this.anchor.setTo(0.5);
+
+            this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+            this.animations.add('left', [10, 11, 12, 13, 14, 15, 15, 17, 18, 19]);            
+
             game.add.existing(this);
             // Physics
             game.physics.enable(this);

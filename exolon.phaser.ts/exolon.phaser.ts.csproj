@@ -22,6 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build\assets\tilemaps\hero\hero.png" />
     <Content Include="build\assets\tilemaps\maps\map01.png" />
     <Content Include="build\assets\ui\gameLogo.png" />
     <Content Include="build\libs\phaser.js" />
@@ -53,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build\assets\tilemaps\maps\map01.json" />
+    <Content Include="build\assets\tilemaps\maps\map01.tmx" />
+    <Content Include="build\assets\tilemaps\hero\hero.json" />
+    <Content Include="build\assets\tilemaps\hero\hero.tmx" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

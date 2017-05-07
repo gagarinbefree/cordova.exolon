@@ -11,7 +11,8 @@
 
             this.load.image('titlepage', './assets/ui/titlePage.png');
             this.load.image('logo', './assets/ui/gameLogo.png');
-            this.load.audio('click', './assets/sounds/click.ogg', true);            
+            this.load.audio('click', './assets/sounds/click.ogg', true);
+            this.load.spritesheet('hero', 'assets/tilemaps/hero/hero.png', 24, 32);            
         }
 
         create() {

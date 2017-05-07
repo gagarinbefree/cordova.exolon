@@ -42,9 +42,9 @@ var exolon;
                 var Player = (function (_super) {
                     __extends(Player, _super);
                     function Player(game, x, y) {
-                        _super.call(this, game, x, y, 'level01-sprites', 1);
-                        this.anchor.setTo(0.5);
-                        this.animations.add('fly', [0, 1], 5, true);
+                        _super.call(this, game, x, y, 'hero');
+                        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+                        this.animations.add('left', [10, 11, 12, 13, 14, 15, 15, 17, 18, 19]);
                         game.add.existing(this);
                         game.physics.enable(this);
                         this.body.collideWorldBounds = true;
@@ -137,10 +137,14 @@ var exolon;
                     Level01.prototype.create = function () {
                         this.map = this.game.add.tilemap('TilemapLevel01', 8, 8, 32, 22);
                         this.tileset = this.map.addTilesetImage('8x8', 'TileLevel01');
-                        this.layer = this.map.createLayer('TilesLayerLevel01');
-                        this.layer.resizeWorld();
-                        this.layer.scale = new Phaser.Point(4, 4);
+                        this.layer01 = this.map.createLayer('TilesLayer01Level01');
+                        this.layer01.scale = new Phaser.Point(4, 4);
+                        this.player = new Client.Player(this.game, 140, 448);
+                        this.player.scale = new Phaser.Point(4, 4);
+                        this.layer02 = this.map.createLayer('TilesLayer02Level01');
+                        this.layer02.scale = new Phaser.Point(4, 4);
                         this.physics.startSystem(Phaser.Physics.ARCADE);
+                        this.game.physics.arcade.enable(this.player);
                     };
                     return Level01;
                 }(Phaser.State));
@@ -199,6 +203,7 @@ var exolon;
                         this.load.image('titlepage', './assets/ui/titlePage.png');
                         this.load.image('logo', './assets/ui/gameLogo.png');
                         this.load.audio('click', './assets/sounds/click.ogg', true);
+                        this.load.spritesheet('hero', 'assets/tilemaps/hero/hero.png', 24, 32);
                     };
                     Preloader.prototype.create = function () {
                         var tween = this.add.tween(this.loaderText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
