@@ -18,7 +18,7 @@
             game.physics.arcade.enable(this);
             this.body.collideWorldBounds = true;           
             this.body.gravity.y = 300;
-
+                        
             this.scale = new Phaser.Point(4, 4);   
         }
 
@@ -39,16 +39,10 @@
                 else
                     this.animations.play('downleft');
             } else if (keys.isDown(Phaser.Keyboard.UP) && this.body.touching.down) {
-                if (this.body.touching.down && this.jumpTimer === 0) {
-                    // jump is allowed to start
-                    this.jumpTimer = 1;
+                if (this.body.touching.down) {
                     this.body.velocity.y = -256;
-                } else if (this.jumpTimer > 0 && this.jumpTimer < 31) {
-                    // keep jumping higher
-                    this.jumpTimer++;
-                    this.body.velocity.y = -256 + (this.jumpTimer * 7);
                 }
-
+                
                 if (this._sideAnim(anim) == 1) {
                     this.animations.play('jumpright');                    
                 }
@@ -58,13 +52,13 @@
 
                 //this.body.velocity.y = -350;     
             } else {
-                if (this.body.touching.down || this.jumpTimer == 0) {
+                if (this.body.touching.down) {
                     if (this._sideAnim(anim) == 1)
                         this.animations.frame = 0;
                     else
                         this.animations.frame = 14;
 
-                    this.jumpTimer = 0;
+                    this.body.gravity.x = 0;
                 }
             } 
         }
