@@ -73,17 +73,6 @@
                 }, 
                 {
                  "height":32,
-                 "id":62,
-                 "name":"ground",
-                 "rotation":0,
-                 "type":"ground",
-                 "visible":true,
-                 "width":256,
-                 "x":0,
-                 "y":144
-                }, 
-                {
-                 "height":32,
                  "id":64,
                  "name":"ground",
                  "rotation":0,
@@ -108,7 +97,7 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"map01.png",
+         "image":"map1.png",
          "imageheight":176,
          "imagewidth":256,
          "margin":0,

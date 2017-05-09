@@ -43,32 +43,65 @@ var exolon;
                     __extends(Player, _super);
                     function Player(game, x, y) {
                         _super.call(this, game, x, y, 'hero');
-                        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-                        this.animations.add('left', [10, 11, 12, 13, 14, 15, 15, 17, 18, 19]);
+                        this.jumpTimer = 0;
+                        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 20, true);
+                        this.animations.add('left', [19, 18, 17, 16, 15, 14, 13, 12, 11, 10], 20, true);
+                        this.animations.add('downleft', [23], 20, true);
+                        this.animations.add('downright', [21], 20, true);
+                        this.animations.add('jumpleft', [11], 20, true);
+                        this.animations.add('jumpright', [8], 20, true);
                         game.add.existing(this);
-                        game.physics.enable(this);
+                        game.physics.arcade.enable(this);
                         this.body.collideWorldBounds = true;
-                        this.body.setCircle(20);
+                        this.body.gravity.y = 300;
+                        this.scale = new Phaser.Point(4, 4);
                     }
                     Player.prototype.update = function () {
+                        var anim = this.animations.currentAnim;
+                        var keys = this.game.input.keyboard;
                         this.body.velocity.x = 0;
-                        if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                            this.body.velocity.x = -50;
-                            this.animations.play('fly');
-                            if (this.scale.x === -1) {
-                                this.scale.x = 1;
-                            }
+                        if (keys.isDown(Phaser.Keyboard.LEFT) && this.body.touching.down) {
+                            this.body.velocity.x = -150;
+                            this.animations.play('left');
                         }
-                        else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                            this.body.velocity.x = 50;
-                            this.animations.play('fly');
-                            if (this.scale.x === 1) {
-                                this.scale.x = -1;
+                        else if (keys.isDown(Phaser.Keyboard.RIGHT) && this.body.touching.down) {
+                            this.body.velocity.x = 150;
+                            this.animations.play('right');
+                        }
+                        else if (keys.isDown(Phaser.Keyboard.DOWN) && this.body.touching.down) {
+                            if (this._sideAnim(anim) == 1)
+                                this.animations.play('downright');
+                            else
+                                this.animations.play('downleft');
+                        }
+                        else if (keys.isDown(Phaser.Keyboard.UP) && this.body.touching.down) {
+                            if (this.body.touching.down && this.jumpTimer === 0) {
+                                this.jumpTimer = 1;
+                                this.body.velocity.y = -256;
+                            }
+                            else if (this.jumpTimer > 0 && this.jumpTimer < 31) {
+                                this.jumpTimer++;
+                                this.body.velocity.y = -256 + (this.jumpTimer * 7);
+                            }
+                            if (this._sideAnim(anim) == 1) {
+                                this.animations.play('jumpright');
+                            }
+                            else {
+                                this.animations.play('jumpleft');
                             }
                         }
                         else {
-                            this.animations.frame = 0;
+                            if (this.body.touching.down || this.jumpTimer == 0) {
+                                if (this._sideAnim(anim) == 1)
+                                    this.animations.frame = 0;
+                                else
+                                    this.animations.frame = 14;
+                                this.jumpTimer = 0;
+                            }
                         }
+                    };
+                    Player.prototype._sideAnim = function (anim) {
+                        return anim.name.lastIndexOf('right') > -1 ? 1 : 0;
                     };
                     return Player;
                 }(Phaser.Sprite));
@@ -137,14 +170,62 @@ var exolon;
                     Level01.prototype.create = function () {
                         this.map = this.game.add.tilemap('TilemapLevel01', 8, 8, 32, 22);
                         this.tileset = this.map.addTilesetImage('8x8', 'TileLevel01');
-                        this.layer01 = this.map.createLayer('TilesLayer01Level01');
-                        this.layer01.scale = new Phaser.Point(4, 4);
-                        this.player = new Client.Player(this.game, 140, 448);
-                        this.player.scale = new Phaser.Point(4, 4);
-                        this.layer02 = this.map.createLayer('TilesLayer02Level01');
-                        this.layer02.scale = new Phaser.Point(4, 4);
+                        this.groundGroup = this._createGround();
+                        this.tilesLayer01 = this._createLayer('TilesLayer01Level01');
+                        this.player = this._createPlayer('right');
+                        this.tilesLayer02 = this._createLayer('TilesLayer02Level01');
                         this.physics.startSystem(Phaser.Physics.ARCADE);
-                        this.game.physics.arcade.enable(this.player);
+                        this.game.world.enableBody = true;
+                    };
+                    Level01.prototype.update = function () {
+                        this.game.physics.arcade.collide(this.player, this.groundGroup);
+                    };
+                    Level01.prototype._createLayer = function (layer) {
+                        var result = this.map.createLayer(layer);
+                        result.scale = new Phaser.Point(4, 4);
+                        return result;
+                    };
+                    Level01.prototype._createPlayer = function (animationName) {
+                        var result = new Client.Player(this.game, 135, 400);
+                        result.animations.play(animationName);
+                        return result;
+                    };
+                    Level01.prototype._findObjectsByType = function (type, map, layer) {
+                        var result = new Array();
+                        this.map.objects[layer].forEach(function (element) {
+                            if (element.type === type) {
+                                result.push(element);
+                            }
+                        });
+                        return result;
+                    };
+                    Level01.prototype._createFromTiledObject = function (element, group) {
+                        var sprite = this.game.add.sprite(element.x * 4, element.y * 4);
+                        sprite.width = element.width * 4;
+                        sprite.height = element.height * 4;
+                        sprite.name = element.name;
+                        sprite.key = element.name;
+                        group.add(sprite);
+                        this.groundSprite = sprite;
+                    };
+                    Level01.prototype._createGround = function () {
+                        var self = this;
+                        var result = this.game.add.group();
+                        result.enableBody = true;
+                        result.physicsBodyType = Phaser.Physics.ARCADE;
+                        var grounds = this._findObjectsByType('ground', this.map, 'ObjectsLayerLevel01');
+                        grounds.forEach(function (element) {
+                            self._createFromTiledObject(element, result);
+                        }, this);
+                        result.setAll('body.allowGravity', false);
+                        result.setAll('body.immovable', true);
+                        return result;
+                    };
+                    Level01.prototype.render = function () {
+                        this.game.debug.text(Math.round(this.player.x).toString() + ';' + Math.round(this.player.y).toString(), 0, 800);
+                    };
+                    Level01.prototype.renderGroup = function (member) {
+                        this.game.debug.body(member);
                     };
                     return Level01;
                 }(Phaser.State));

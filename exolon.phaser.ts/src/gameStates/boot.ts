@@ -12,7 +12,7 @@
             this.stage.disableVisibilityChange = true;
 
             if (this.game.device.desktop) {
-                this.scale.pageAlignHorizontally = true;
+                this.scale.pageAlignHorizontally = true;                
                 //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             } else {
                 // mobile
@@ -25,6 +25,8 @@
                 this.scale.pageAlignHorizontally = true;
                 this.scale.refresh();
             }
+
+            //this.world.scale.setTo(4, 4);
 
             this.game.state.start('Preloader', true, false);
         }
