@@ -4,14 +4,14 @@ body {
   font-family: Verdana,Geneva,sans-serif;
   font-size: 12px;
   font-weight: bold;
-  margin-top: 20px;
+  margin: 0px;
 }
 strong {
   color: #E800E8;
 }
 #page {
   width: 512px;
-  margin: 0 auto;
+  margin: 0px;
 }
 #info {
   margin-bottom: 7px;

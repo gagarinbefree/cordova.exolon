@@ -96,7 +96,11 @@ define(
       me.debug.renderHitBox = config.renderHitBox;
       me.debug.renderCollisionMap = config.renderCollisionMap;
       
-      me.video.init("app", 512, 384);
+      var physicalScreenWidth = window.screen.width;// * window.devicePixelRatio;
+
+      var scale = physicalScreenWidth / 512;
+      me.video.init("app", 512, 384, true, scale);
+
       me.audio.init("mp3,ogg");
       
       me.loader.onload = this.loaded.bind(this);
