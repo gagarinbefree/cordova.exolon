@@ -28,7 +28,20 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
-    },
+
+        setTimeout(function() {
+            $('#firebutton').on('click', function() {
+                var e = new KeyboardEvent('keydown',{keyCode: 32, which :32});            
+                window.dispatchEvent(e);
+
+                setTimeout(function() {
+                    var e = new KeyboardEvent('keyup',{keyCode: 32, which :32});            
+                    window.dispatchEvent(e);    
+                }, 100);
+                
+            });
+        }, 2000);
+    },    
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {

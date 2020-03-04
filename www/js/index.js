@@ -28,7 +28,45 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
-    },
+            console.log("support", $.support.touch ? "tap" : "click")
+
+            $('#firebutton').on('click', function(e) {
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+
+                setTimeout(function() {
+                    window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));                       
+                }, 50);
+            });
+
+            /*btn.addEventListener('keydown', function(e) {
+                var e = new KeyboardEvent('keydown',{keyCode: 32, which :32});            
+                //window.dispatchEvent(e);   
+
+                console.log('keydown', e);
+            });
+
+            btn.addEventListener('keyup', function(e) {
+                var e = new KeyboardEvent('keyup',{keyCode: 32, which :32});            
+                window.dispatchEvent(e);       
+
+                console.log('keyup', e);
+            });*/
+
+
+            /*$('#firebutton').keydown(function() {
+                var e = new KeyboardEvent('keydown',{keyCode: 32, which :32});            
+                window.dispatchEvent(e)                    
+
+                alert('keydown');
+            });
+
+            $('#firebutton').keyup(function() {
+                var e = new KeyboardEvent('keyup',{keyCode: 32, which :32});            
+                window.dispatchEvent(e);    
+            });*/
+
+
+    },    
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
