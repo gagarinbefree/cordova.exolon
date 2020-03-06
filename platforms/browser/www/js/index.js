@@ -30,11 +30,12 @@ var app = {
         this.receivedEvent('deviceready');
             console.log("support", $.support.touch ? "tap" : "click")
 
-            document.getElementById('keyfire').addEventListener('touchstart', function(){
-                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+            var keyfire = document.getElementById('keyfire');
+            keyfire.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which: 32}));   
             }, true);
-            document.getElementById('keyfire').addEventListener('touchend', function(){
-                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));   
+            keyfire.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which: 32}));   
             }, true);
             
 

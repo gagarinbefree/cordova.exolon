@@ -30,13 +30,35 @@ var app = {
         this.receivedEvent('deviceready');
             console.log("support", $.support.touch ? "tap" : "click")
 
-            $('#firebutton').on('click', function(e) {
+            document.getElementById('keyfire').addEventListener('touchstart', function(){
                 window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+            }, true);
+            document.getElementById('keyfire').addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));   
+            }, true);
+            
 
-                setTimeout(function() {
-                    window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));                       
-                }, 50);
-            });
+            // $('#keyfire').mousedown(function(e) {
+
+            //     console.log('keydown');
+
+            //     window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+            // });
+            // $('#keyfire').on('mouseup', function(e) {
+            //     window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));                       
+            // });
+
+
+            // $('#keyfire').on('click', function(e) {
+
+            //     console.log("key fire click", e);
+
+            //     window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+
+            //     setTimeout(function() {
+            //         window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));                       
+            //     }, 50);
+            // });
 
             /*btn.addEventListener('keydown', function(e) {
                 var e = new KeyboardEvent('keydown',{keyCode: 32, which :32});            
