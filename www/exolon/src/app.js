@@ -99,6 +99,9 @@ define(
       var physicalScreenWidth = window.screen.width;// * window.devicePixelRatio;
 
       var scale = physicalScreenWidth / 512;
+
+console.log("scale", scale);
+
       me.video.init("app", 512, 384, true, scale);
 
       me.audio.init("mp3,ogg");

@@ -30,12 +30,56 @@ var app = {
         this.receivedEvent('deviceready');
             console.log("support", $.support.touch ? "tap" : "click")
 
-            document.getElementById('keyfire').addEventListener('touchstart', function(){
-                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which :32}));   
+            setTimeout(() => {            
+                var cnvs = document.getElementsByTagName('canvas')[0];
+                var page = document.getElementById('page');
+
+                page.style.width = cnvs.width + 'px';                
+            }, 1000);
+            
+
+            //document.getElementById('page').width = width;
+
+            var keyfire = document.getElementById('keyfire');
+            keyfire.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 32, which: 32}));   
             }, true);
-            document.getElementById('keyfire').addEventListener('touchend', function(){
-                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which :32}));   
+            keyfire.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 32, which: 32}));   
             }, true);
+            
+            var keyright = document.getElementById('keyright');
+            keyright.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 39, which: 39}));   
+            }, true);
+            keyright.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 39, which: 39}));   
+            }, true);
+
+            var keyleft = document.getElementById('keyleft');
+            keyleft.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 37, which: 37}));   
+            }, true);
+            keyleft.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 37, which: 37}));   
+            }, true);
+
+            var keyup = document.getElementById('keyup');
+            keyup.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 38, which: 38}));   
+            }, true);
+            keyup.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 38, which: 38}));   
+            }, true);
+
+            var keydown = document.getElementById('keydown');
+            keydown.addEventListener('touchstart', function(){
+                window.dispatchEvent(new KeyboardEvent('keydown',{keyCode: 40, which: 40}));   
+            }, true);
+            keydown.addEventListener('touchend', function(){
+                window.dispatchEvent(new KeyboardEvent('keyup',{keyCode: 40, which: 40}));   
+            }, true);
+
             
 
             // $('#keyfire').mousedown(function(e) {
